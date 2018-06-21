@@ -20,7 +20,8 @@ module OmniAuth
         authorization_endpoint: '/authorize',
         token_endpoint: '/token',
         userinfo_endpoint: '/userinfo',
-        jwks_uri: '/jwk'
+        jwks_uri: '/jwk',
+        end_session_endpoint: nil,
       }
       option :issuer
       option :discovery, false
@@ -147,6 +148,7 @@ module OmniAuth
         client_options.token_endpoint = config.token_endpoint
         client_options.userinfo_endpoint = config.userinfo_endpoint
         client_options.jwks_uri = config.jwks_uri
+        client_options.end_session_endpoint = config.try(:end_session_endpoint)
       end
 
       def user_info
