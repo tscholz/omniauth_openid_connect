@@ -20,7 +20,8 @@ module OmniAuth
         authorization_endpoint: '/authorize',
         token_endpoint: '/token',
         userinfo_endpoint: '/userinfo',
-        jwks_uri: '/jwk'
+        jwks_uri: '/jwk',
+        end_session_endpoint: nil,
       }
       option :issuer
       option :discovery, false
@@ -117,11 +118,13 @@ module OmniAuth
 
       def authorize_uri
         client.redirect_uri = redirect_uri
+        login_hint = request.env.fetch('rack.request.query_hash', {}).fetch('login_hint', '')
+
         opts = {
           response_type: options.response_type,
           scope: options.scope,
           state: new_state,
-          login_hint: options.login_hint,
+          login_hint: login_hint,
           prompt: options.prompt,
           nonce: (new_nonce if options.send_nonce),
           hd: options.hd,
@@ -147,6 +150,7 @@ module OmniAuth
         client_options.token_endpoint = config.token_endpoint
         client_options.userinfo_endpoint = config.userinfo_endpoint
         client_options.jwks_uri = config.jwks_uri
+        client_options.end_session_endpoint = config.try(:end_session_endpoint)
       end
 
       def user_info
