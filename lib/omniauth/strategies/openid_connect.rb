@@ -38,7 +38,6 @@ module OmniAuth
       option :max_age
       option :ui_locales
       option :id_token_hint
-      option :login_hint
       option :acr_values
       option :send_nonce, true
       option :send_scope_to_token_endpoint, true
@@ -137,8 +136,10 @@ module OmniAuth
           response_type: options.response_type,
           scope: options.scope,
           state: new_state,
-          login_hint: options.login_hint,
-          prompt: options.prompt,
+          login_hint: request.params['login_hint'],
+          ui_locales: request.params['ui_locales'],
+          claims_locales: request.params['claims_locales'],
+          prompt: request.params['prompt'],
           nonce: (new_nonce if options.send_nonce),
           hd: options.hd,
         }
