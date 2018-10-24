@@ -21,7 +21,7 @@ module OmniAuth
         token_endpoint: '/token',
         userinfo_endpoint: '/userinfo',
         jwks_uri: '/jwk',
-        end_session_endpoint: nil,
+        end_session_endpoint: '/logout',
         post_logout_redirect_uri: nil
       }
       option :issuer
