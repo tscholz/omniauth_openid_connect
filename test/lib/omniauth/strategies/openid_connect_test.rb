@@ -45,7 +45,7 @@ module OmniAuth
         expected_redirect = 'https://example.com/logout?post_logout_redirect_uri=https%3A%2F%2Fmysite.com'
         strategy.options.client_options.host = 'example.com'
         strategy.options.discovery = true
-        strategy.options.post_logout_redirect_uri = 'https://mysite.com'
+        strategy.options.client_options.post_logout_redirect_uri = 'https://mysite.com'
 
         issuer = stub('OpenIDConnect::Discovery::Issuer')
         issuer.stubs(:issuer).returns('https://example.com/')

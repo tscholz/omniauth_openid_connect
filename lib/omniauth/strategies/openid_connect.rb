@@ -21,7 +21,8 @@ module OmniAuth
         token_endpoint: '/token',
         userinfo_endpoint: '/userinfo',
         jwks_uri: '/jwk',
-        end_session_endpoint: nil
+        end_session_endpoint: nil,
+        post_logout_redirect_uri: nil
       }
       option :issuer
       option :discovery, false
@@ -42,7 +43,6 @@ module OmniAuth
       option :send_nonce, true
       option :send_scope_to_token_endpoint, true
       option :client_auth_method
-      option :post_logout_redirect_uri
 
       uid { user_info.sub }
 
@@ -259,9 +259,9 @@ module OmniAuth
       end
 
       def encoded_post_logout_redirect_uri
-        return unless options.post_logout_redirect_uri
+        return unless client_options.post_logout_redirect_uri
         URI.encode_www_form(
-          post_logout_redirect_uri: options.post_logout_redirect_uri
+          post_logout_redirect_uri: client_options.post_logout_redirect_uri
         )
       end
 
